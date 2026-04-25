@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+PROJECT_ROOT="$(cd -- "${SCRIPT_DIR}/.." && pwd -P)"
+
+usage() {
+  cat <<'EOF'
+Usage: scripts/cli-local-test
+
+Build, lint, typecheck, pack, and smoke-install the local `ankimd` packages.
+
+Environment variables:
+  ANKIMD_PACK_DIR   Directory for generated tarballs.
+                    Default: <repo>/.tmp/packed
+  ANKIMD_SMOKE_DIR  Existing or new directory to use for the throwaway smoke app.
+                    Default: a new temporary directory under $TMPDIR or /tmp
+EOF
+}
+
+case "${1:-}" in
+  -h|--help)
+    usage
+    exit 0
+    ;;
+esac
+
+cd "${PROJECT_ROOT}"
+
+echo "Running from ${PROJECT_ROOT}"
+
+CLI_PKG_JSON="${PROJECT_ROOT}/cli/package.json"
+CORE_PKG_JSON="${PROJECT_ROOT}/packages/ankimd/package.json"
+
+PACK_DIR="${ANKIMD_PACK_DIR:-${PROJECT_ROOT}/.tmp/packed}"
+mkdir -p "${PACK_DIR}"
+
+SMOKE_DIR_CREATED=0
+if [[ -n "${ANKIMD_SMOKE_DIR:-}" ]]; then
+  SMOKE_DIR="${ANKIMD_SMOKE_DIR}"
+  mkdir -p "${SMOKE_DIR}"
+else
+  SMOKE_DIR="$(mktemp -d "${TMPDIR:-/tmp}/ankimd-cli-local-test.XXXXXX")"
+  SMOKE_DIR_CREATED=1
+fi
+
+if (( SMOKE_DIR_CREATED )); then
+  trap 'rm -rf "${SMOKE_DIR}"' EXIT
+fi
+
+CLI_VERSION="$(node -e "console.log(require(process.argv[1]).version)" "${CLI_PKG_JSON}")"
+CORE_VERSION="$(node -e "console.log(require(process.argv[1]).version)" "${CORE_PKG_JSON}")"
+CLI_TGZ="${PACK_DIR}/shbernal-ankimd-cli-${CLI_VERSION}.tgz"
+CORE_TGZ="${PACK_DIR}/shbernal-ankimd-${CORE_VERSION}.tgz"
+
+echo "=== Core (@shbernal/ankimd) ==="
+pnpm --filter @shbernal/ankimd clean
+pnpm install --filter @shbernal/ankimd...
+pnpm --filter @shbernal/ankimd typecheck
+pnpm --filter @shbernal/ankimd lint
+pnpm --filter @shbernal/ankimd format
+pnpm --filter @shbernal/ankimd build
+pnpm --filter @shbernal/ankimd pack --pack-destination "${PACK_DIR}"
+
+sleep 2
+
+echo "=== CLI (@shbernal/ankimd-cli) ==="
+pnpm --filter @shbernal/ankimd-cli clean
+pnpm install --filter @shbernal/ankimd-cli...
+pnpm --filter @shbernal/ankimd-cli typecheck
+pnpm --filter @shbernal/ankimd-cli lint
+pnpm --filter @shbernal/ankimd-cli format
+pnpm --filter @shbernal/ankimd-cli build
+pnpm --filter @shbernal/ankimd-cli pack --pack-destination "${PACK_DIR}"
+
+cat > "${SMOKE_DIR}/package.json" <<JSON
+{
+  "name": "ankimd-cli-local-test",
+  "private": true,
+  "pnpm": {
+    "overrides": {
+      "@shbernal/ankimd": "file:${CORE_TGZ}"
+    }
+  }
+}
+JSON
+
+echo "=== Smoke install ==="
+pnpm add --dir "${SMOKE_DIR}" "${CORE_TGZ}"
+pnpm add --dir "${SMOKE_DIR}" "${CLI_TGZ}"
+pnpm --dir "${SMOKE_DIR}" exec ankimd --help >/dev/null
+
+echo "Packages packed to:"
+echo " - ${CORE_TGZ}"
+echo " - ${CLI_TGZ}"
+echo "Smoke project:"
+echo " - ${SMOKE_DIR}"
+echo "Smoke install succeeded"
+echo "Script successful"

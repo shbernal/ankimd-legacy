@@ -1,0 +1,6 @@
+packages:
+  - cli
+  - packages/*
+
+onlyBuiltDependencies:
+  - esbuild

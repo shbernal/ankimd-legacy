@@ -1,0 +1,12 @@
+**/node_modules/
+**/dist
+.env*
+*.tsbuildinfo
+.turbo
+.tmp/
+
+AGENTS.md
+
+.codex
+
+test

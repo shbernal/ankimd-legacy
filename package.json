@@ -1,0 +1,40 @@
+{
+  "name": "ankimd",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.33.2",
+  "type": "module",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "clean": "turbo clean",
+    "format": "turbo format",
+    "cli-local-test": "./scripts/cli-local-test",
+    "ankimd-local": "pnpm build && env ANKIMD_LOCAL_DEV=1 ANKIMD_CALLER_CWD=\"$INIT_CWD\" pnpm --dir cli exec node dist/index.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.6.0",
+    "@typescript-eslint/eslint-plugin": "^8.59.0",
+    "@typescript-eslint/parser": "^8.59.0",
+    "eslint": "^10.2.1",
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "prettier": "^3.8.3",
+    "turbo": "^2.9.6",
+    "typescript": "^6.0.3"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 80,
+    "tabWidth": 2,
+    "useTabs": false,
+    "bracketSpacing": true,
+    "bracketSameLine": false,
+    "arrowParens": "avoid",
+    "endOfLine": "lf"
+  }
+}

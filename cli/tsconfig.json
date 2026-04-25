@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "declaration": true,
+    "declarationMap": true,
+    "noEmit": false,
+    "moduleResolution": "Bundler",
+    "composite": true,
+    "paths": {
+      "@shbernal/ankimd": ["../packages/ankimd/dist/index.d.ts"],
+      "@shbernal/ankimd/*": ["../packages/ankimd/dist/*"]
+    }
+  },
+  "include": ["src/**/*.ts"],
+  "references": [{ "path": "../packages/ankimd" }]
+}

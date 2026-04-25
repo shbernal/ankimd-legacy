@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "..",
+    "noEmit": true,
+    "composite": false,
+    "incremental": false,
+    "paths": {
+      "@shbernal/ankimd": ["../packages/ankimd/src"],
+      "@shbernal/ankimd/*": ["../packages/ankimd/src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "../packages/ankimd/src/**/*.ts"],
+  "exclude": ["dist"]
+}
