@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "type": "module",
   "packageManager": "pnpm@11.5.0",
-  "description": "Core Anki-to-Markdown conversion utilities for ankimd",
+  "description": "Convert Anki exports into readable Markdown flashcards.",
   "author": "shbernal <shbernal.01@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/shbernal/ankimd",
   "repository": {
     "type": "git",
-    "url": "https://github.com/shbernal/ankimd.git"
+    "url": "git+https://github.com/shbernal/ankimd.git",
+    "directory": "packages/ankimd"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,6 +22,14 @@
     "src",
     "LICENSE",
     "README.md"
+  ],
+  "keywords": [
+    "anki",
+    "markdown",
+    "flashcards",
+    "spaced-repetition",
+    "anki-export",
+    "developer-tools"
   ],
   "publishConfig": {
     "access": "public"

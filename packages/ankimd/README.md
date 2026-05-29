@@ -1,6 +1,9 @@
 # ankimd
 
-Core Anki-to-Markdown conversion utilities for `ankimd`.
+[![weekly downloads](https://img.shields.io/npm/dw/%40shbernal%2Fankimd.svg?label=npm%20downloads&logo=npm)](https://www.npmjs.com/package/@shbernal/ankimd)
+[![total downloads](https://img.shields.io/npm/dt/%40shbernal%2Fankimd.svg?label=npm%20total%20downloads&logo=npm)](https://www.npmjs.com/package/@shbernal/ankimd)
+
+Convert Anki exports into readable Markdown flashcards.
 
 ## Requirements
 
