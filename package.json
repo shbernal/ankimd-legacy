@@ -9,6 +9,7 @@
     "build": "turbo build",
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",
+    "test": "pnpm --filter @shbernal/ankimd build && pnpm --filter @shbernal/ankimd-cli build && node --test test/**/*.test.mjs",
     "clean": "turbo clean",
     "format": "turbo format",
     "cli-local-test": "./scripts/cli-local-test",

@@ -20,12 +20,15 @@ pnpm i -g @shbernal/ankimd-cli
 Local repo workflows
 - Run the local-dev CLI against repo sources from the project root:
   - `pnpm ankimd-local -- --help`
+  - `pnpm ankimd-local -- convert test/input/english-vocabulary-anki-flashcards-export.txt`
 - Run the pack/install smoke test from the project root:
   - `pnpm cli-local-test`
+- Run the fixture-backed test suite from the project root:
+  - `pnpm test`
 - `pnpm cli-local-test` defaults to writing tarballs under `.tmp/packed/`.
 - Override the pack output directory when needed:
   - `ANKIMD_PACK_DIR=/tmp/ankimd-packed pnpm cli-local-test`
 
 Status
-- The repository scaffold is in place.
-- Converter implementation is intentionally not included yet.
+- Flashcards `.txt` export conversion is implemented.
+- `.apkg` support is still a later phase.

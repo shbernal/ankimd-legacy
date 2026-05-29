@@ -10,10 +10,15 @@ Convert Anki exports into Markdown.
 
 - Node >=20
 
+## Usage
+
+- `ankimd convert <input.txt>`
+- `ankimd convert <input.txt> --output <output.md>`
+
 ## Status
 
-- This CLI package is scaffolded and publishable in shape.
-- Conversion commands are not implemented yet.
+- Flashcards `.txt` export conversion is implemented.
+- `.apkg` support is not implemented yet.
 
 ## Local development
 

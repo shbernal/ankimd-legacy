@@ -13,7 +13,17 @@ Core Anki-to-Markdown conversion utilities for `ankimd`.
 pnpm add @shbernal/ankimd
 ```
 
+## Usage
+
+```ts
+import { convertAnkiTxtToMarkdown } from '@shbernal/ankimd'
+
+const result = convertAnkiTxtToMarkdown(txtExport, {
+  sourceName: 'english-vocabulary-anki-flashcards-export.txt',
+})
+```
+
 ## Status
 
-- Package scaffold only.
-- Public conversion API will be added when the converter implementation starts.
+- Flashcards `.txt` export conversion is available.
+- `.apkg` support is not implemented yet.
