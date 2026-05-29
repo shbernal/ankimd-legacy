@@ -1,6 +1,9 @@
 # ankimd
 
-Convert Anki exports into Markdown.
+[![weekly downloads](https://img.shields.io/npm/dw/%40shbernal%2Fankimd-cli.svg?label=npm%20downloads&logo=npm)](https://www.npmjs.com/package/@shbernal/ankimd-cli)
+[![total downloads](https://img.shields.io/npm/dt/%40shbernal%2Fankimd-cli.svg?label=npm%20total%20downloads&logo=npm)](https://www.npmjs.com/package/@shbernal/ankimd-cli)
+
+Convert Anki exports into readable Markdown flashcards.
 
 ## Installation
 

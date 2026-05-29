@@ -1,0 +1,101 @@
+name: Publish to npm
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: publish-npm-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish packages
+    if: github.repository == 'shbernal/ankimd' && (github.event_name == 'release' || github.ref == 'refs/heads/master')
+    runs-on: ubuntu-latest
+    environment: npm-publish
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      - name: Ensure npm supports trusted publishing
+        run: |
+          npm install -g npm@latest
+          npm --version
+
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare "$(node -p "require('./package.json').packageManager")" --activate
+          pnpm --version
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Typecheck
+        run: pnpm run typecheck
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Verify package contents
+        run: scripts/cli-local-test
+
+      - name: Verify package versions match
+        run: |
+          CORE_VERSION="$(node -p "require('./packages/ankimd/package.json').version")"
+          CLI_VERSION="$(node -p "require('./cli/package.json').version")"
+
+          if [ "$CORE_VERSION" != "$CLI_VERSION" ]; then
+            echo "::error::Package versions differ: @shbernal/ankimd@$CORE_VERSION and @shbernal/ankimd-cli@$CLI_VERSION."
+            exit 1
+          fi
+
+      - name: Verify release tag matches package version
+        if: github.event_name == 'release'
+        run: |
+          PACKAGE_VERSION="$(node -p "require('./packages/ankimd/package.json').version")"
+
+          if [ "$GITHUB_REF_NAME" != "v$PACKAGE_VERSION" ] && [ "$GITHUB_REF_NAME" != "$PACKAGE_VERSION" ]; then
+            echo "::error::Release tag '$GITHUB_REF_NAME' does not match package version '$PACKAGE_VERSION'."
+            exit 1
+          fi
+
+      - name: Verify versions are unpublished
+        run: |
+          verify_unpublished() {
+            package_name="$1"
+            package_version="$2"
+
+            if npm view "$package_name@$package_version" version >/dev/null 2>&1; then
+              echo "::error::$package_name@$package_version is already published on npm."
+              exit 1
+            fi
+          }
+
+          verify_unpublished "@shbernal/ankimd" "$(node -p "require('./packages/ankimd/package.json').version")"
+          verify_unpublished "@shbernal/ankimd-cli" "$(node -p "require('./cli/package.json').version")"
+
+      - name: Publish core package
+        run: pnpm --filter @shbernal/ankimd publish --access public --provenance --ignore-scripts --no-git-checks
+
+      - name: Publish CLI package
+        run: pnpm --filter @shbernal/ankimd-cli publish --access public --provenance --ignore-scripts --no-git-checks

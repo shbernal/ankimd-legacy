@@ -1,11 +1,14 @@
 {
   "name": "@shbernal/ankimd-cli",
   "version": "0.1.0",
-  "description": "Convert Anki exports to Markdown",
+  "description": "Convert Anki exports into readable Markdown flashcards.",
   "keywords": [
     "anki",
     "markdown",
-    "cli"
+    "flashcards",
+    "spaced-repetition",
+    "anki-export",
+    "developer-tools"
   ],
   "type": "module",
   "packageManager": "pnpm@11.5.0",
@@ -27,7 +30,8 @@
   "homepage": "https://github.com/shbernal/ankimd",
   "repository": {
     "type": "git",
-    "url": "https://github.com/shbernal/ankimd.git"
+    "url": "git+https://github.com/shbernal/ankimd.git",
+    "directory": "cli"
   },
   "license": "MIT",
   "engines": {
