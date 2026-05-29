@@ -13,6 +13,17 @@ const fixturePath = path.resolve(
 )
 const expectedPath = path.resolve('test/expected-output/english.md')
 const cliPath = path.resolve('cli/dist/index.js')
+const cliPackagePath = path.resolve('cli/package.json')
+
+test('CLI version matches the package version', async () => {
+  const packageJson = JSON.parse(await readFile(cliPackagePath, 'utf8'))
+  const { stdout } = await execFileAsync(process.execPath, [
+    cliPath,
+    '--version',
+  ])
+
+  assert.equal(stdout, `${packageJson.version}\n`)
+})
 
 test('CLI convert writes the markdown snapshot to stdout', async () => {
   const expected = await readFile(expectedPath, 'utf8')
