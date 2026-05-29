@@ -55,39 +55,46 @@ CLI_TGZ="${PACK_DIR}/shbernal-ankimd-cli-${CLI_VERSION}.tgz"
 CORE_TGZ="${PACK_DIR}/shbernal-ankimd-${CORE_VERSION}.tgz"
 
 echo "=== Core (@shbernal/ankimd) ==="
-pnpm --filter @shbernal/ankimd clean
+pnpm --filter @shbernal/ankimd run clean
 pnpm install --filter @shbernal/ankimd...
-pnpm --filter @shbernal/ankimd typecheck
-pnpm --filter @shbernal/ankimd lint
-pnpm --filter @shbernal/ankimd format
-pnpm --filter @shbernal/ankimd build
+pnpm --filter @shbernal/ankimd run typecheck
+pnpm --filter @shbernal/ankimd run lint
+pnpm --filter @shbernal/ankimd run format
+pnpm --filter @shbernal/ankimd run build
 pnpm --filter @shbernal/ankimd pack --pack-destination "${PACK_DIR}"
 
 sleep 2
 
 echo "=== CLI (@shbernal/ankimd-cli) ==="
-pnpm --filter @shbernal/ankimd-cli clean
+pnpm --filter @shbernal/ankimd-cli run clean
 pnpm install --filter @shbernal/ankimd-cli...
-pnpm --filter @shbernal/ankimd-cli typecheck
-pnpm --filter @shbernal/ankimd-cli lint
-pnpm --filter @shbernal/ankimd-cli format
-pnpm --filter @shbernal/ankimd-cli build
+pnpm --filter @shbernal/ankimd-cli run typecheck
+pnpm --filter @shbernal/ankimd-cli run lint
+pnpm --filter @shbernal/ankimd-cli run format
+pnpm --filter @shbernal/ankimd-cli run build
 pnpm --filter @shbernal/ankimd-cli pack --pack-destination "${PACK_DIR}"
 
 cat > "${SMOKE_DIR}/package.json" <<JSON
 {
   "name": "ankimd-cli-local-test",
-  "private": true,
-  "pnpm": {
-    "overrides": {
-      "@shbernal/ankimd": "file:${CORE_TGZ}"
-    }
-  }
+  "private": true
 }
 JSON
+cat > "${SMOKE_DIR}/.pnpmfile.cjs" <<JS
+module.exports = {
+  hooks: {
+    readPackage(pkg) {
+      if (pkg.name === "@shbernal/ankimd-cli") {
+        pkg.dependencies = pkg.dependencies || {};
+        pkg.dependencies["@shbernal/ankimd"] = "file:${CORE_TGZ}";
+      }
+      return pkg;
+    },
+  },
+};
+JS
 
 echo "=== Smoke install ==="
-pnpm add --dir "${SMOKE_DIR}" "${CORE_TGZ}"
 pnpm add --dir "${SMOKE_DIR}" "${CLI_TGZ}"
 pnpm --dir "${SMOKE_DIR}" exec ankimd --help >/dev/null
 
