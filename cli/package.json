@@ -8,7 +8,7 @@
     "cli"
   ],
   "type": "module",
-  "packageManager": "pnpm@10.33.2",
+  "packageManager": "pnpm@11.5.0",
   "bin": {
     "ankimd": "dist/index.js"
   },
@@ -37,7 +37,7 @@
     "@shbernal/ankimd": "workspace:^"
   },
   "devDependencies": {
-    "tsx": "^4.21.0"
+    "tsx": "^4.22.3"
   },
   "publishConfig": {
     "access": "public"

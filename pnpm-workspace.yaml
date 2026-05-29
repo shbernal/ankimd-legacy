@@ -2,5 +2,8 @@ packages:
   - cli
   - packages/*
 
+allowBuilds:
+  esbuild: true
+
 onlyBuiltDependencies:
   - esbuild
