@@ -6,6 +6,7 @@
 .tmp/
 
 AGENTS.md
+CLAUDE.md
 
 .codex
 test/english-test.md
