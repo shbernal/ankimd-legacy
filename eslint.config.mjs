@@ -49,11 +49,11 @@ export default defineConfig([
     },
   },
   globalIgnores([
-    'dist/**',
-    'node_modules/**',
-    'coverage/**',
-    '.turbo/**',
-    '.tmp/**',
-    '*.tsbuildinfo',
+    '**/dist/**',
+    '**/node_modules/**',
+    '**/coverage/**',
+    '**/.turbo/**',
+    '**/.tmp/**',
+    '**/*.tsbuildinfo',
   ]),
 ])
