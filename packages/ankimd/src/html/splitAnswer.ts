@@ -4,9 +4,9 @@ export function splitAnswerHtml(renderedCardHtml: string): {
   frontHtml: string
   answerHtml: string
 } {
-  const match = renderedCardHtml.match(ANSWER_SEPARATOR_PATTERN)
+  const match = ANSWER_SEPARATOR_PATTERN.exec(renderedCardHtml)
 
-  if (!match || match.index === undefined) {
+  if (match?.index === undefined) {
     return {
       frontHtml: renderedCardHtml,
       answerHtml: renderedCardHtml,

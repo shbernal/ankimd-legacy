@@ -1,11 +1,31 @@
+import { fileURLToPath } from 'node:url'
 import js from '@eslint/js'
-import { defineConfig, globalIgnores } from 'eslint/config'
-import tsPlugin from '@typescript-eslint/eslint-plugin'
-import tsParser from '@typescript-eslint/parser'
+import { globalIgnores } from 'eslint/config'
 import unusedImports from 'eslint-plugin-unused-imports'
 import globals from 'globals'
+import tseslint from 'typescript-eslint'
 
-export default defineConfig([
+const tsconfigRootDir = fileURLToPath(new URL('.', import.meta.url))
+
+const typeCheckedConfigs = tseslint.configs.recommendedTypeChecked.map(
+  config => ({ ...config, files: ['**/*.ts'] }),
+)
+
+const stylisticConfigs = tseslint.configs.stylisticTypeChecked.map(config => ({
+  ...config,
+  files: ['**/*.ts'],
+}))
+
+export default tseslint.config(
+  globalIgnores([
+    '**/dist/**',
+    '**/node_modules/**',
+    '**/coverage/**',
+    '**/.turbo/**',
+    '**/.tmp/**',
+    '**/*.tsbuildinfo',
+    '**/*.d.ts',
+  ]),
   {
     files: ['**/*.{js,mjs,cjs}'],
     ...js.configs.recommended,
@@ -17,28 +37,34 @@ export default defineConfig([
       },
     },
   },
+  ...typeCheckedConfigs,
+  ...stylisticConfigs,
   {
     files: ['**/*.ts'],
     languageOptions: {
-      parser: tsParser,
       parserOptions: {
+        projectService: true,
+        tsconfigRootDir,
         ecmaVersion: 'latest',
         sourceType: 'module',
       },
+      globals: {
+        ...globals.node,
+      },
     },
     plugins: {
-      '@typescript-eslint': tsPlugin,
       'unused-imports': unusedImports,
     },
     rules: {
-      ...tsPlugin.configs.recommended.rules,
-      '@typescript-eslint/no-unused-vars': [
+      '@typescript-eslint/consistent-type-imports': [
         'warn',
-        { varsIgnorePattern: '^_', argsIgnorePattern: '^_' },
+        { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
       ],
+      // unused-imports owns unused reporting so it can auto-drop dead imports
+      '@typescript-eslint/no-unused-vars': 'off',
       'unused-imports/no-unused-imports': 'error',
       'unused-imports/no-unused-vars': [
-        'warn',
+        'error',
         {
           vars: 'all',
           varsIgnorePattern: '^_',
@@ -48,12 +74,4 @@ export default defineConfig([
       ],
     },
   },
-  globalIgnores([
-    '**/dist/**',
-    '**/node_modules/**',
-    '**/coverage/**',
-    '**/.turbo/**',
-    '**/.tmp/**',
-    '**/*.tsbuildinfo',
-  ]),
-])
+)

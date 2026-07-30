@@ -5,7 +5,7 @@ const DEFAULT_SEPARATOR = '\t'
 export function parseAnkiFlashcardsExport(
   input: string,
 ): ParsedAnkiTxtDocument {
-  const headerMatch = input.match(/^(?:#[^\n]*(?:\n|$))*/)
+  const headerMatch = /^(?:#[^\n]*(?:\n|$))*/.exec(input)
   const headerBlock = headerMatch?.[0] ?? ''
   const data = input.slice(headerBlock.length)
 
