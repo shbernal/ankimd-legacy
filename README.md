@@ -11,24 +11,29 @@ Convert Anki exports into readable Markdown flashcards. This repository hosts
 the CLI plus the shared package that powers the conversion pipeline.
 
 Project layout
+
 - `cli/`: The published CLI (`@shbernal/ankimd-cli`)
 - `packages/`: Shared library code used by the CLI
 - `scripts/`, `turbo.json`, `pnpm-workspace.yaml`: Repo-level tooling
 
 Requirements
+
 - Node.js >= 20
 
 Install (CLI)
+
 ```bash
 pnpm i -g @shbernal/ankimd-cli
 ```
 
 Install (library)
+
 ```bash
 pnpm add @shbernal/ankimd
 ```
 
 Local repo workflows
+
 - Run the local-dev CLI against repo sources from the project root:
   - `pnpm ankimd-local -- --help`
   - `pnpm ankimd-local -- convert test/input/english-vocabulary-anki-flashcards-export.txt`
@@ -41,5 +46,6 @@ Local repo workflows
   - `ANKIMD_PACK_DIR=/tmp/ankimd-packed pnpm cli-local-test`
 
 Status
+
 - Flashcards `.txt` export conversion is implemented.
 - `.apkg` support is still a later phase.

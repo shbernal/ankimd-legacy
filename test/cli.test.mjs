@@ -59,7 +59,9 @@ test('CLI convert writes the markdown snapshot to a file', async () => {
 
 test('CLI convert resolves relative paths from ANKIMD_CALLER_CWD', async () => {
   const expected = await readFile(expectedPath, 'utf8')
-  const tempDir = await mkdtemp(path.join(os.tmpdir(), 'ankimd-cli-caller-cwd-'))
+  const tempDir = await mkdtemp(
+    path.join(os.tmpdir(), 'ankimd-cli-caller-cwd-'),
+  )
   const repoRoot = path.resolve('.')
   const callerCwd = path.resolve('test')
   const outputPath = path.join(tempDir, 'relative-output.md')

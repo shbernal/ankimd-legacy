@@ -7,11 +7,12 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
-    "lint": "turbo lint",
+    "lint": "eslint . --max-warnings 0",
     "typecheck": "turbo typecheck",
     "test": "pnpm --filter @shbernal/ankimd build && pnpm --filter @shbernal/ankimd-cli build && node --test test/**/*.test.mjs",
     "clean": "turbo clean",
-    "format": "turbo format",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "cli-local-test": "./scripts/cli-local-test",
     "ankimd-local": "pnpm build && env ANKIMD_LOCAL_DEV=1 ANKIMD_CALLER_CWD=\"$INIT_CWD\" pnpm --dir cli exec node dist/index.js"
   },
@@ -22,6 +23,8 @@
     "@typescript-eslint/parser": "^8.65.0",
     "eslint": "^10.8.0",
     "eslint-plugin-unused-imports": "^4.4.1",
+    "globals": "^17.8.0",
+    "lefthook": "^2.1.10",
     "prettier": "^3.9.6",
     "turbo": "^2.10.7",
     "typescript": "^6.0.3"

@@ -59,7 +59,6 @@ pnpm --filter @shbernal/ankimd run clean
 pnpm install --filter @shbernal/ankimd...
 pnpm --filter @shbernal/ankimd run typecheck
 pnpm --filter @shbernal/ankimd run lint
-pnpm --filter @shbernal/ankimd run format
 pnpm --filter @shbernal/ankimd run build
 pnpm --filter @shbernal/ankimd pack --pack-destination "${PACK_DIR}"
 
@@ -70,7 +69,6 @@ pnpm --filter @shbernal/ankimd-cli run clean
 pnpm install --filter @shbernal/ankimd-cli...
 pnpm --filter @shbernal/ankimd-cli run typecheck
 pnpm --filter @shbernal/ankimd-cli run lint
-pnpm --filter @shbernal/ankimd-cli run format
 pnpm --filter @shbernal/ankimd-cli run build
 pnpm --filter @shbernal/ankimd-cli pack --pack-destination "${PACK_DIR}"
 
