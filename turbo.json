@@ -8,13 +8,7 @@
     "dev": {
       "cache": false
     },
-    "lint": {
-      "outputs": []
-    },
     "typecheck": {
-      "outputs": []
-    },
-    "format": {
       "outputs": []
     },
     "clean": {

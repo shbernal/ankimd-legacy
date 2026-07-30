@@ -4,8 +4,10 @@ packages:
 
 allowBuilds:
   esbuild: true
+  lefthook: true
 
 minimumReleaseAgeStrict: true
 
 onlyBuiltDependencies:
   - esbuild
+  - lefthook
