@@ -41,7 +41,7 @@
     "@shbernal/ankimd": "workspace:^"
   },
   "devDependencies": {
-    "tsx": "^4.22.3"
+    "tsx": "^4.23.1"
   },
   "publishConfig": {
     "access": "public"
