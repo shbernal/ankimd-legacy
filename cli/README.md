@@ -11,7 +11,7 @@ Convert Anki exports into readable Markdown flashcards.
 
 ### Requirements
 
-- Node >=20
+- Node >=24
 
 ## Usage
 
