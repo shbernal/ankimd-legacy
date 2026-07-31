@@ -1,6 +1,6 @@
 {
   "name": "@shbernal/ankimd",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "type": "module",
   "description": "Convert Anki exports into readable Markdown flashcards.",
   "author": "shbernal <shbernal.01@gmail.com>",

@@ -1,6 +1,6 @@
 {
   "name": "@shbernal/ankimd-cli",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Convert Anki exports into readable Markdown flashcards.",
   "keywords": [
     "anki",
