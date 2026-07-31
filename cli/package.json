@@ -1,6 +1,6 @@
 {
   "name": "@shbernal/ankimd-cli",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Convert Anki exports into readable Markdown flashcards.",
   "keywords": [
     "anki",
@@ -11,7 +11,6 @@
     "developer-tools"
   ],
   "type": "module",
-  "packageManager": "pnpm@11.5.0",
   "bin": {
     "ankimd": "dist/index.js"
   },
@@ -34,7 +33,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "dependencies": {
     "@shbernal/ankimd": "workspace:^"

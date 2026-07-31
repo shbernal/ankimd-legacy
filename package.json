@@ -1,6 +1,6 @@
 {
   "name": "ankimd",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "private": true,
   "packageManager": "pnpm@11.18.0+sha512.33d83c77da82f49fba836925c6f1b841181ec3132b670639bd012f7075f5c7cf634c5f870147c19aae7478fac01df09d8892e880454896edd23ee9b33757563c",
   "type": "module",
@@ -9,7 +9,9 @@
     "build": "turbo build",
     "lint": "eslint . --max-warnings 0",
     "typecheck": "turbo typecheck",
-    "test": "pnpm --filter @shbernal/ankimd build && pnpm --filter @shbernal/ankimd-cli build && node --test test/**/*.test.mjs",
+    "test": "turbo test test:workspace",
+    "test:workspace": "node --test \"test/**/*.test.mjs\"",
+    "test:coverage": "turbo build && node --test --experimental-test-coverage --test-coverage-exclude=\"test/**\" \"test/**/*.test.mjs\"",
     "clean": "turbo clean",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -27,7 +29,8 @@
     "lefthook": "^2.1.10",
     "prettier": "^3.9.6",
     "turbo": "^2.10.7",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.65.0"
   },
   "prettier": {
     "semi": false,

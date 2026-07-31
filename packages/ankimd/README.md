@@ -7,7 +7,7 @@ Convert Anki exports into readable Markdown flashcards.
 
 ## Requirements
 
-- Node.js >= 20
+- Node.js >= 24
 - ESM
 
 ## Install

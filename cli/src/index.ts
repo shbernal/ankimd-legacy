@@ -63,7 +63,7 @@ function resolveCliPath(filePath: string): string {
   }
 
   const callerCwd = process.env.ANKIMD_CALLER_CWD
-  const baseDir = callerCwd && callerCwd.trim() ? callerCwd : process.cwd()
+  const baseDir = callerCwd?.trim() ? callerCwd : process.cwd()
 
   return path.resolve(baseDir, filePath)
 }
