@@ -8,6 +8,15 @@
     "dev": {
       "cache": false
     },
+    "test": {
+      "dependsOn": ["build", "^build"],
+      "outputs": []
+    },
+    "//#test:workspace": {
+      "dependsOn": ["@shbernal/ankimd#build", "@shbernal/ankimd-cli#build"],
+      "inputs": ["test/**"],
+      "outputs": []
+    },
     "typecheck": {
       "outputs": []
     },
